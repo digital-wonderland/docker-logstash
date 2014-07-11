@@ -10,7 +10,7 @@ FORWARDER_DIR=/mnt/logstash-forwarder
 # Generate SSL cert/key for logstash-forwarder
 if [ ! -f "$FORWARDER_DIR/logstash-forwarder.key" ]; then
     echo "Generating new logstash-forwarder key"
-    openssl req -x509 -batch -nodes -newkey rsa:4096 -keyout "$FORWARDER_DIR/logstash-forwarder.key" -out "$FORWARDER_DIR/logstash-forwarder.crt"
+    openssl req -x509 -batch -nodes -newkey rsa:4096 -keyout "$FORWARDER_DIR/logstash-forwarder.key" -out "$FORWARDER_DIR/logstash-forwarder.crt" -subj '/CN=*'
 fi
 
 # See contents of file named in $DEFAULT for comments
