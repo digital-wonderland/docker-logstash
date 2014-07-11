@@ -4,10 +4,13 @@ FROM digitalwonderland/oracle-jre-8:latest
 
 Add ./src /
 
-RUN yum install -y logstash && yum clean all; \
-    chmod +x /usr/local/sbin/start.sh; \
-    mkdir /mnt/logstash-forwarder; \
-    chown -R logstash:logstash /mnt/logstash-forwarder
+RUN chmod +x /usr/local/sbin/start.sh
+
+RUN rpm --import http://packages.elasticsearch.org/GPG-KEY-elasticsearch \
+ && yum install -y logstash && yum clean all
+
+RUN mkdir /mnt/logstash-forwarder \
+ && chown -R logstash:logstash /mnt/logstash-forwarder
 
 EXPOSE 5043
 
