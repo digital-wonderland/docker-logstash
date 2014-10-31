@@ -9,7 +9,7 @@ input {
 output {
   elasticsearch {
     protocol => "http"
-    host => "elasticsearch"
-    port => 9200
+    host => "{{getv "/elasticsearch/port/9200/tcp/addr"}}"
+    port => "{{getv "/elasticsearch/port/9200/tcp/port"}}"
   }
 }

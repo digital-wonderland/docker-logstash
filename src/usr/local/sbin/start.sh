@@ -6,15 +6,18 @@ DEFAULT=/etc/sysconfig/$NAME
 # Fail hard and fast
 set -eo pipefail
 
-FORWARDER_DIR=/mnt/logstash-forwarder
+# Generate logstash.conf
+confd -onetime -backend env
+
 # Generate SSL cert/key for logstash-forwarder
+FORWARDER_DIR=/mnt/logstash-forwarder
 if [ ! -f "$FORWARDER_DIR/logstash-forwarder.key" ]; then
     echo "Generating new logstash-forwarder key"
     openssl req -x509 -batch -nodes -newkey rsa:4096 -keyout "$FORWARDER_DIR/logstash-forwarder.key" -out "$FORWARDER_DIR/logstash-forwarder.crt" -subj '/CN=*'
 fi
 
 # See contents of file named in $DEFAULT for comments
-LS_HOME=/var/lib/logstash
+LS_HOME="/var/lib/logstash"
 LS_HEAP_SIZE="500m"
 LS_JAVA_OPTS="-Djava.io.tmpdir=${LS_HOME}"
 LS_CONF_DIR=/etc/logstash/conf.d
@@ -34,6 +37,6 @@ HOME="${HOME:-$LS_HOME}"
 JAVACMD="/usr/bin/java"
 JAVA_OPTS="${LS_JAVA_OPTS}"
 cd "${LS_HOME}"
-export HOME JAVACMD JAVA_OPTS LS_HEAP_SIZE LS_JAVA_OPTS LS_USE_GC_LOGGING
+export HOME JAVACMD JAVA_OPTS LS_HEAP_SIZE LS_JAVA_OPTS LS_USE_GC_LOGGING DAEMON DAEMON_OPTS
 
-$DAEMON $DAEMON_OPTS
+su -s /bin/bash logstash -c "$DAEMON $DAEMON_OPTS"

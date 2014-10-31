@@ -17,6 +17,4 @@ EXPOSE 5043
 
 VOLUME ["/etc/logstash", "/mnt/logstash-forwarder"]
 
-USER logstash
-
 ENTRYPOINT ["/usr/local/sbin/start.sh"]

@@ -1,0 +1,6 @@
+[template]
+src = "logstash.conf.tmpl"
+dest = "/etc/logstash/conf.d/logstash.conf"
+keys = [
+    "/ELASTICSEARCH/PORT/9200/TCP",
+]
