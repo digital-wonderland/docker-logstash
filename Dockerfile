@@ -1,6 +1,6 @@
 # Logstash
 
-FROM digitalwonderland/oracle-jre-8:latest
+FROM digitalwonderland/base:latest
 
 Add ./src /
 
