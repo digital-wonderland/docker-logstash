@@ -4,6 +4,12 @@ input {
     ssl_certificate => "/mnt/logstash-forwarder/logstash-forwarder.crt"
     ssl_key => "/mnt/logstash-forwarder/logstash-forwarder.key"
   }
+  syslog {
+    port => 1514
+  }
+  tcp {
+    port => 3333
+  }
 }
 
 output {
