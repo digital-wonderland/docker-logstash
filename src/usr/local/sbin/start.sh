@@ -1,10 +1,13 @@
-#! /bin/sh
+#! /usr/bin/env bash
 
 NAME=logstash
 DEFAULT=/etc/sysconfig/$NAME
 
 # Fail hard and fast
 set -eo pipefail
+
+export ELASTICSEARCH_PORT_9200_TCP_ADDR=${ELASTICSEARCH_PORT_9200_TCP_ADDR:-elasticsearch}
+export ELASTICSEARCH_PORT_9200_TCP_PORT=${ELASTICSEARCH_PORT_9200_TCP_PORT:-9200}
 
 # Generate logstash.conf
 confd -onetime -backend env
