@@ -12,6 +12,20 @@ input {
   }
 }
 
+filter {
+  if [type] == "docker" {
+    json {
+      source => "message"
+    }
+    mutate {
+      rename => [ "log", "message" ]
+    }
+    date {
+      match => [ "time", "ISO8601" ]
+    }
+  }
+}
+
 output {
   elasticsearch {
     protocol => "http"
